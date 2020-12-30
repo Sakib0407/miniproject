@@ -5,13 +5,16 @@ import reportWebVitals from './reportWebVitals';
 import {ThemeProvider ,} from '@material-ui/core/styles';
 import { CssBaseline } from '@material-ui/core';
 import  { theme } from './theme'
+import { Context } from "./Context";
 
 ReactDOM.render(
   <React.StrictMode>
+    <Context>
     <ThemeProvider theme={theme}>
       <CssBaseline />
     <App />
     </ThemeProvider>
+    </Context>
   </React.StrictMode>,
   document.getElementById('root')
 );

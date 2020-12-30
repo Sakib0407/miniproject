@@ -7,7 +7,7 @@ export const theme = createMuiTheme({
         ],
         h4: {
             fontFamily: "Inter",
-            fontSize:"23px",
+            fontSize:"19px",
             fontWeight: '600'
         },
     },

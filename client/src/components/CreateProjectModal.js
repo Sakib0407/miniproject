@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useState,useContext,useEffect} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import { Grid, Typography, Divider, Button } from "@material-ui/core";
@@ -8,7 +8,8 @@ import {
     DatePicker,MuiPickersUtilsProvider
   } from '@material-ui/pickers';
   import DateFnsUtils from '@date-io/date-fns';
- import axios from 'axios'
+  import { UserContext } from "../Context";
+import axios from 'axios'
 
 function getModalStyle() {
   const top = 50;
@@ -86,6 +87,11 @@ const useStyles = makeStyles((theme) => ({
       marginTop: '20px',
       backgroundColor:'#0276FD'
   },
+  span:{
+    color: "#ff0033",
+    fontSize: '11px',
+    marginLeft: '10px'
+  },
   underline: {
     "& .MuiInput-underline:before": {
       borderBottom: "none"
@@ -99,10 +105,12 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function CreateProjectModal({ open, setOpen }) {
+export default function CreateProjectModal({ open, setOpen ,pay ,setPay}) {
     const { handleSubmit, register, errors } = useForm({});
   const classes = useStyles();
   const [date, setDate] = useState(new Date());
+  const cont =  useContext(UserContext)
+
   
 
   // getModalStyle is not a pure function, we roll the style only on the first render
@@ -112,7 +120,7 @@ export default function CreateProjectModal({ open, setOpen }) {
     summary: "",
     cost: 0
   })
-  const [fees, setFess]= useState(0)
+  const [fees, setFees]= useState(0)
   const [amount, setAmount]= useState(0)
   
   let total = 0
@@ -125,22 +133,37 @@ export default function CreateProjectModal({ open, setOpen }) {
       ...state,
       [evt.target.name]: value
     });
+   
   
   }
+  useEffect(() => {
+    const taxAmount = (20 / 100) * cost;
+    setFees(taxAmount);
+    setAmount(Number(cost) + Number(taxAmount));
+  },[cost]);
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
+  
 
   const handleClose = () => {
     setOpen(false);
   };
+  
   const onSubmit = async() =>{
 
-  //   const { data } = await axios.post('http://localhost:3000/project',
-  //   {name, summary ,date,cost})
-  //   console.log(data)
+     const { data } = await axios.post('http://localhost:3000/project',
+     {name, summary ,date,cost})
+     
+  // cont.dispatch({
+  //   type: "SET_DATA",
+  //   payload: {name,summary,cost,date}
+  // }
+  const t =  (cost / 100) * 20 
+  setAmount(  )
+  cont.setTax(amount)
   handleClose()
+  
+  setPay(!pay)
+
    }
   const handleDate = ( ) =>{
       
@@ -176,16 +199,16 @@ export default function CreateProjectModal({ open, setOpen }) {
           >
             <Grid item>
               <input placeholder="Title" name='name' onChange={handleChange} className={classes.input} ref={register({ required: true, maxLength: 10 })} />
-              {errors.name?.type === "required" && "Title cannot be empty"}
-      {errors.name?.type === "maxLength" && "Your input exceed maximun length"}
+              {errors.name?.type === "required" && <span className={classes.span}> Title cannot be empty </span>}
+      {errors.name?.type === "maxLength" && <span className={classes.span}> Your input exceed maximun length </span>}
             </Grid>
             <Grid item>
               <textarea
                 placeholder="Description"
                 className={`${classes.input}  ${classes.textarea}`} onChange={handleChange} name='summary' ref={register({ required: true, maxLength: 200 })}
               />
-               {errors.summary?.type === "required" && "Description cannot be empty"}
-      {errors.summary?.type === "maxLength" && "Your input exceed maximun length"}
+               {errors.summary?.type === "required" && <span className={classes.span}> Description cannot be empty </span>}
+      {errors.summary?.type === "maxLength" && <span className={classes.span}>Your input exceed maximun length </span>}
             </Grid>
             <Grid item>
               <input
@@ -201,7 +224,7 @@ export default function CreateProjectModal({ open, setOpen }) {
             </Grid>
             <Grid item>
               <input placeholder="cost Cost" onChange={handleChange} name='cost'className={classes.input}ref={register({required: true, min: 100, max: 10000})} />
-              {errors.cost && "Cost must be between 100-100000"}
+              {errors.cost && <span className={classes.span}> Cost must be between 100-100000 </span>}
 
             </Grid>
           </Grid>
@@ -216,7 +239,7 @@ export default function CreateProjectModal({ open, setOpen }) {
           <Grid item sm></Grid>
           <Grid item>
             <Typography className={classes.priceFont} variant="subtitle1">
-             {fees}
+             {`$ ${fees}.0`}
             </Typography>
           </Grid>
         </Grid>
@@ -230,7 +253,7 @@ export default function CreateProjectModal({ open, setOpen }) {
           <Grid item sm></Grid>
           <Grid item>
             <Typography className={classes.priceFont} variant="subtitle1">
-            { amount}
+            {`$ ${ amount}.0`}
             </Typography>
           </Grid>
           <Grid></Grid>
@@ -238,12 +261,12 @@ export default function CreateProjectModal({ open, setOpen }) {
       </Grid>
       <Grid container className={classes.price} justify='center'>
         <Button className={classes.button}  type='submit' variant="contained" color="primary">
-         Create cost
+         Create project
         </Button>
       </Grid>
       </form>
       </Grid>
-      
+     
     </div>
   );
 
