@@ -123,7 +123,7 @@ const View = () => {
                 </Grid>
                 <Grid item>
                   <Grid container alignItems="center">
-                    <CalendarTodayOutlinedIcon
+                    <FolderOutlinedIcon
                       className={classes.small}
                       fontsize="small"
                     />
