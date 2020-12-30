@@ -86,7 +86,8 @@ const useStyles = makeStyles((theme) => ({
   button:{
     padding: '10px 25px',
     marginTop: '20px',
-    backgroundColor:'#0276FD'
+    backgroundColor:'#0276FD',
+    
 },
 btgird:{
     paddingTop: '80px'
@@ -102,13 +103,11 @@ export default function PayModal({ pay, setPay }) {
   const [check, setCheck] = React.useState(true);
 
   const handleClose = () => {
-    cont.fetch()
+    
     setPay(false);
   };
-  const onSubmit = async () => {
-    //   const { data } = await axios.post('http://localhost:3000/project',
-    //   {name, summary ,date,cost})
-    //   console.log(data)
+  const handleSubmit =  () => {
+    cont.fetch()
     handleClose();
   };
 
@@ -193,7 +192,7 @@ export default function PayModal({ pay, setPay }) {
         </div>
       </div>
       <Grid className={classes.btgird} container justify='center'>
-      <Button className={classes.button}  type='submit' variant="contained" onClick={  handleClose} >
+      <Button className={classes.button}  type='submit' variant="contained" onClick={  handleSubmit} >
          Pay
         </Button>
         </Grid>
