@@ -15,15 +15,18 @@ const useStyles = makeStyles({
   bg: {
     width: "500px",
     margin: "4px 0",
-    padding: "30px 35px",
+   
     backgroundColor: "#fafafb",
+  },
+  content:{
+    padding: "30px 25px",
   },
   icon: {
     marginRight: "10px",
     color: "#66bb6a",
   },
   blue: {
-    marginRight: "30px",
+    marginRight: "20px",
     fontSize: "23px",
     color: "#42a5f5",
     fontStyle: "italic",
@@ -54,7 +57,8 @@ const useStyles = makeStyles({
   button:{
     padding: '10px 25px',
     marginTop: '20px',
-    backgroundColor:'#0276FD'
+    backgroundColor:'#0276FD',
+    marginTop: '-20px'
 },
 });
 
@@ -82,7 +86,7 @@ const View = () => {
             </Typography>
           </Grid>
           <Grid container className={classes.bg}>
-            <Grid container justify="space-between" alignItems="flex-start">
+            <Grid container  className={classes.content} justify="space-between" alignItems="flex-start">
               <Grid item>
                 <Typography className={classes.textFont} variant="h4">
                   I'll be your businees expert
@@ -104,7 +108,7 @@ const View = () => {
             </Grid>
           </Grid>
           <Grid container className={classes.bg}>
-            <Grid container justify="space-between" alignItems="flex-start">
+            <Grid container justify="space-between" className={classes.content} alignItems="flex-start">
               <Grid item>
                 <Typography className={classes.sub} variant="h4">
                   Instead of the typical seamless color transisiton you see in
