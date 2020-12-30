@@ -23,6 +23,7 @@ const useStyles = makeStyles({
     color: "#66bb6a",
   },
   blue: {
+    marginRight: "30px",
     fontSize: "23px",
     color: "#42a5f5",
     fontStyle: "italic",
