@@ -108,7 +108,7 @@ const useStyles = makeStyles((theme) => ({
 export default function CreateProjectModal({ open, setOpen ,pay ,setPay}) {
     const { handleSubmit, register, errors } = useForm({});
   const classes = useStyles();
-  const [date, setDate] = useState(new Date());
+  const [date,setDate]=useState();
   const cont =  useContext(UserContext)
 
   
@@ -219,7 +219,7 @@ export default function CreateProjectModal({ open, setOpen ,pay ,setPay}) {
             </Grid>
             <Grid item>
             <MuiPickersUtilsProvider todayLabel    utils={DateFnsUtils}>
-            <DatePicker minDate={new Date()}     className={`${classes.input} ${classes.underline}`} value={date}  onChange={ () => setDate(date)}/>
+            <DatePicker minDate={new Date()}     className={`${classes.input} ${classes.underline}`} value={date}  onChange={setDate} />
             </MuiPickersUtilsProvider>
             </Grid>
             <Grid item>
